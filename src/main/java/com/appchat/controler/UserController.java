@@ -49,4 +49,26 @@ public class UserController {
     ){
         return userManager.getAllLastMess(lastMess);
     }
+
+    @PostMapping(path = "/changeAvatar")
+    public Object changeAvatar(
+            @RequestBody UpdateAvatar updateAvatar
+            ){
+        return userManager.changeAvatar(updateAvatar);
+    }
+
+    @GetMapping(path = "getFriendSendedMess")
+    public Object getFriendSendedMess(
+            @RequestParam("userId") int userId
+    ){
+        return userManager.getSenderMess(userId);
+    }
+
+    @GetMapping(path = "getAllNotFriend")
+    public Object getAllNotFriend(
+            @RequestParam("userId") int userId
+    )
+    {
+        return userManager.findAllNotFriend(userId);
+    }
 }

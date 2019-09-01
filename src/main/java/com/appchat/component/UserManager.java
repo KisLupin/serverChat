@@ -1,9 +1,6 @@
 package com.appchat.component;
 
-import com.appchat.model.data.FriendToAdd;
-import com.appchat.model.data.Message;
-import com.appchat.model.data.UpdateAvatar;
-import com.appchat.model.data.UserProfile;
+import com.appchat.model.data.*;
 import com.appchat.model.request.LastMess;
 import com.appchat.model.request.RegisterRequest;
 import com.appchat.model.response.BaseResponse;
@@ -34,6 +31,8 @@ public class UserManager {
     private FindNotFriendRepository findNotFriendRepository;
     @Autowired
     private MessFindLastMess messFindLastMess;
+    @Autowired
+    private FriendChatedRepository friendChatedRepository;
 
     public Object login(LoginRequest loginRequest) {
         UserProfile userProfile = userProfileRepository.findByUsername(loginRequest.getUsername());
@@ -90,5 +89,10 @@ public class UserManager {
             return 0;
         }
         return messageChatResponses;
+    }
+
+    public Object getSenderMess(int userId){
+        List<FriendChated> friends = friendChatedRepository.findSendedMess(userId);
+        return friends;
     }
 }

@@ -6,13 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "add")
 public class FriendToAdd {
     @Id
+    @Column(name = "friend_id")
     private int id;
-    @Column(name = "username")
+    @Column(name = "friend_nameofchat")
     private String username;
-    @Column(name = "avatar")
+    @Column(name = "friend_avatar")
     private String avatar;
 
     public int getId() {
