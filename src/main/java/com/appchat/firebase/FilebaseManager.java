@@ -20,8 +20,8 @@ public class FilebaseManager {
             InputStream in = new ClassPathResource("primate.json").getInputStream();
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(in))
-                    .setDatabaseUrl("https://appchat-b2613.firebaseio.com")
-                    .setStorageBucket("appchat-b2613.appspot.com")
+                    .setDatabaseUrl("https://appchatt3h-a83ab.firebaseio.com")
+                    .setStorageBucket("appchatt3h-a83ab.appspot.com")
                     .build();
             FirebaseApp.initializeApp(options);
         } catch (IOException e) {
