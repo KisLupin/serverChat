@@ -1,6 +1,7 @@
 package com.appchat.component;
 
 import com.appchat.model.data.*;
+import com.appchat.model.request.AddFriendRequest;
 import com.appchat.model.request.LastMess;
 import com.appchat.model.request.RegisterRequest;
 import com.appchat.model.response.BaseResponse;
@@ -11,12 +12,12 @@ import com.appchat.model.response.FriendResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class UserManager {
+
     @Autowired
     private UserProfileRepository userProfileRepository;
     @Autowired
@@ -33,6 +34,10 @@ public class UserManager {
     private MessFindLastMess messFindLastMess;
     @Autowired
     private FriendChatedRepository friendChatedRepository;
+    @Autowired
+    private AddFriendRepository addFriendRepository;
+    @Autowired
+    private FriendWaitAcceptRepository friendWaitAcceptRepository;
 
     public Object login(LoginRequest loginRequest) {
         UserProfile userProfile = userProfileRepository.findByUsername(loginRequest.getUsername());
@@ -94,5 +99,16 @@ public class UserManager {
     public Object getSenderMess(int userId){
         List<FriendChated> friends = friendChatedRepository.findSendedMess(userId);
         return friends;
+    }
+
+    public Object sendRequestAddFriend(AddFriendRequest addFriendRequest){
+        addFriendRepository.sendRequestAddFriend(addFriendRequest.getSender_id(),addFriendRequest.getReceiver_id(),addFriendRequest.getIs_send());
+        addFriendRepository.save(addFriendRequest);
+        return BaseResponse.createResponse(1,"send request friend is successful");
+    }
+
+    public Object getAllFriendWaitResponse(int userId){
+        List<FriendToAdd> friendToAdds = friendWaitAcceptRepository.allFriendWaitResponse(userId);
+        return friendToAdds;
     }
 }

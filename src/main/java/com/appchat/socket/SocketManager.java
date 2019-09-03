@@ -30,7 +30,7 @@ public class SocketManager {
     public void inits() {
         System.out.println("inits..............");
         Configuration config = new Configuration();
-        config.setHostname("192.168.1.104");
+        config.setHostname("192.168.12.101");
         config.setPort(9999);
         socketIOServer = new SocketIOServer(config);
         socketIOServer.addConnectListener(new ConnectListener() {

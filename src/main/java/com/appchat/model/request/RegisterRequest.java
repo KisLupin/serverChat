@@ -14,7 +14,7 @@ public class RegisterRequest {
     private String username;
     @Column(name = "password")
     private String password;
-    @Column
+    @Column(name = "nameofchat")
     private String nameofchat;
 
     public String getNameofchat() {
