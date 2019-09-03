@@ -9,21 +9,12 @@ import javax.persistence.Table;
 @Table(name = "add_friend_request")
 public class AddFriendRequest {
     @Id
-    private int id;
     @Column(name = "sender_id")
     private int sender_id;
     @Column(name = "receive_id")
     private int receiver_id;
     @Column(name = "send_addfriend")
     private int is_send;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getSender_id() {
         return sender_id;

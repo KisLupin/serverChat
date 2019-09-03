@@ -19,7 +19,8 @@ public interface AddFriendRepository extends JpaRepository<AddFriendRequest,Inte
     @Modifying(clearAutomatically = true)
     @Query(nativeQuery = true,
             value = "insert into friend(sender_id,receive_id,send_addfriend) " +
-                    "values (:sender_id,:receiver_id,:is_send)")
+                    "values (:sender_id,:receiver_id,:is_send)"
+    )
     @Transactional
     void sendRequestAddFriend(
             @Param("sender_id") int sender_id,

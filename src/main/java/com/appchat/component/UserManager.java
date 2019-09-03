@@ -69,8 +69,7 @@ public class UserManager {
         return BaseResponse.createResponse(messageChatResponseRepository.getHistoryMessage(senderId, receiverId));
     }
 
-    public Object changeAvatar(UpdateAvatar updateAvatar)
-    {
+    public Object changeAvatar(UpdateAvatar updateAvatar) {
         updateAvatarRepository.updateAvatar(updateAvatar.getPath(),updateAvatar.getId());
         updateAvatarRepository.save(updateAvatar);
         UserProfile userProfile = userProfileRepository.findById(updateAvatar.getId());
@@ -103,7 +102,6 @@ public class UserManager {
 
     public Object sendRequestAddFriend(AddFriendRequest addFriendRequest){
         addFriendRepository.sendRequestAddFriend(addFriendRequest.getSender_id(),addFriendRequest.getReceiver_id(),addFriendRequest.getIs_send());
-        addFriendRepository.save(addFriendRequest);
         return BaseResponse.createResponse(1,"send request friend is successful");
     }
 
@@ -111,4 +109,5 @@ public class UserManager {
         List<FriendToAdd> friendToAdds = friendWaitAcceptRepository.allFriendWaitResponse(userId);
         return friendToAdds;
     }
+
 }
