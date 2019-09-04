@@ -89,17 +89,17 @@ public class UserController {
         return userManager.getAllFriendWaitResponse(userId);
     }
 
-//    @PostMapping(path = "/decline")
-//    public void declined(
-//            @RequestBody AddFriendResponse addFriendResponse
-//    ){
-//        userManager.declined(addFriendResponse);
-//    }
+    @PostMapping(path = "/decline")
+    public void declined(
+            @RequestBody AddFriendResponse addFriendResponse
+    ){
+        userManager.declined(addFriendResponse);
+    }
 
-//    @PostMapping(path = "/accepted")
-//    public Object accepted(
-//            @RequestBody AddFriendResponse addFriendResponse
-//    ){
-//        return userManager.accepted(addFriendResponse);
-//    }
+    @PostMapping(path = "/accepted")
+    public Object accepted(
+            @RequestBody AddFriendResponse addFriendResponse
+    ){
+        return userManager.accepted(addFriendResponse);
+    }
 }

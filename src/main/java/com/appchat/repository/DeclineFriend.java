@@ -16,10 +16,12 @@ import javax.transaction.Transactional;
 @EnableJpaRepositories
 public interface DeclineFriend extends JpaRepository<AddFriendResponse,Integer> {
     @Modifying(clearAutomatically = true)
-    @Query(nativeQuery = true, value = "delete from friend " +
-            "where sender_id =: sender_id")
+    @Query(nativeQuery = true,
+            value = "delete from friend " +
+                    "where sender_id =:sender_id and receive_id =:receive_id")
     @Transactional
     void declined(
-            @Param("sender_id") int sender_id
+            @Param(value = "sender_id") int sender_id,
+            @Param(value = "receive_id") int receive_id
     );
 }

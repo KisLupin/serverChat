@@ -15,9 +15,9 @@ public interface FindNotFriendRepository extends JpaRepository<FriendToAdd,Integ
                     "user_profile.nameofchat as friend_nameofchat, " +
                     "user_profile.avatar as friend_avatar  " +
                     "from  user_profile where id not in  " +
-                    "(select sender_id as id from (SELECT sender_id,receive_id  from friend where sender_id = 1 or receive_id = 1) sad " +
+                    "(select sender_id as id from (SELECT sender_id,receive_id  from friend where sender_id =:userId or receive_id =:userId) sad " +
                     "union " +
-                    "select receive_id  from (SELECT sender_id,receive_id from friend where sender_id = 1 or receive_id = 1) sad " +
+                    "select receive_id  from (SELECT sender_id,receive_id from friend where sender_id =:userId or receive_id =:userId) sad " +
                     ")")
     List<FriendToAdd> findAllNotFriend(
             @Param(value = "userId") int userId

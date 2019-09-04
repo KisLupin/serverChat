@@ -39,10 +39,10 @@ public class UserManager {
     private AddFriendRepository addFriendRepository;
     @Autowired
     private FriendWaitAcceptRepository friendWaitAcceptRepository;
-//    @Autowired
-//    private DeclineFriend declineFriend;
-//    @Autowired
-//    private AcceptFriendRepository acceptFriendRepository;
+    @Autowired
+    private DeclineFriend declineFriend;
+    @Autowired
+    private AcceptFriendRepository acceptFriendRepository;
 
     public Object login(LoginRequest loginRequest) {
         UserProfile userProfile = userProfileRepository.findByUsername(loginRequest.getUsername());
@@ -115,13 +115,13 @@ public class UserManager {
         return friendToAdds;
     }
 
-//    public Object declined(AddFriendResponse addFriendResponse){
-//        declineFriend.declined(addFriendResponse.getSender_id());
-//        return BaseResponse.createResponse(0,"decline and removed");
-//    }
+    public Object declined(AddFriendResponse addFriendResponse){
+        declineFriend.declined(addFriendResponse.getSender_id(),addFriendResponse.getReceive_id());
+        return BaseResponse.createResponse(0,"decline and removed");
+    }
 
-//    public Object accepted(AddFriendResponse addFriendResponse){
-//        acceptFriendRepository.accepted(addFriendResponse.getIs_accepted(),addFriendResponse.getReceiver_id(),addFriendResponse.getSender_id());
-//        return BaseResponse.createResponse(0,"accepted");
-//    }
+    public Object accepted(AddFriendResponse addFriendResponse){
+        acceptFriendRepository.accepted(addFriendResponse.getSender_id(),addFriendResponse.getReceive_id());
+        return BaseResponse.createResponse(0,"accepted");
+    }
 }

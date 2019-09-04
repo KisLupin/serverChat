@@ -14,6 +14,7 @@ public class FriendToAdd {
     @Column(name = "friend_avatar")
     private String avatar;
 
+
     public int getId() {
         return id;
     }

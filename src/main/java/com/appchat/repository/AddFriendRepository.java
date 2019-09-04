@@ -23,8 +23,8 @@ public interface AddFriendRepository extends JpaRepository<AddFriendRequest,Inte
     )
     @Transactional
     void sendRequestAddFriend(
-            @Param("sender_id") int sender_id,
-            @Param("receiver_id") int receiver_id,
-            @Param("is_send") int is_send
+            @Param(value = "sender_id") int sender_id,
+            @Param(value = "receiver_id") int receiver_id,
+            @Param(value = "is_send") int is_send
     );
 }

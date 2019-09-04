@@ -8,7 +8,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "update_avatar")
 public class UpdateAvatar {
-
     @Id
     private int id;
     @Column(name = "path")
