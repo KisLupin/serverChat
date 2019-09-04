@@ -52,7 +52,12 @@ public class UserController {
     ){
         return userManager.getAllLastMess(lastMess);
     }
-
+    @GetMapping(path="/getAllFriendStory")
+    public Object getAllFriendStory(
+            @RequestParam int userId
+    ){
+        return userManager.getAllFriendStoryChat(userId);
+    }
     @PostMapping(path = "/changeAvatar")
     public Object changeAvatar(
             @RequestBody UpdateAvatar updateAvatar
