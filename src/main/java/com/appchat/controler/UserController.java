@@ -6,6 +6,7 @@ import com.appchat.model.request.AddFriendRequest;
 import com.appchat.model.request.LastMess;
 import com.appchat.model.request.LoginRequest;
 import com.appchat.model.request.RegisterRequest;
+import com.appchat.model.response.AddFriendResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -87,4 +88,18 @@ public class UserController {
     ){
         return userManager.getAllFriendWaitResponse(userId);
     }
+
+//    @PostMapping(path = "/decline")
+//    public void declined(
+//            @RequestBody AddFriendResponse addFriendResponse
+//    ){
+//        userManager.declined(addFriendResponse);
+//    }
+
+//    @PostMapping(path = "/accepted")
+//    public Object accepted(
+//            @RequestBody AddFriendResponse addFriendResponse
+//    ){
+//        return userManager.accepted(addFriendResponse);
+//    }
 }

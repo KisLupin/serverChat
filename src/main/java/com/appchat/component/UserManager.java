@@ -4,6 +4,7 @@ import com.appchat.model.data.*;
 import com.appchat.model.request.AddFriendRequest;
 import com.appchat.model.request.LastMess;
 import com.appchat.model.request.RegisterRequest;
+import com.appchat.model.response.AddFriendResponse;
 import com.appchat.model.response.BaseResponse;
 import com.appchat.model.response.MessageChatResponse;
 import com.appchat.repository.*;
@@ -38,6 +39,10 @@ public class UserManager {
     private AddFriendRepository addFriendRepository;
     @Autowired
     private FriendWaitAcceptRepository friendWaitAcceptRepository;
+//    @Autowired
+//    private DeclineFriend declineFriend;
+//    @Autowired
+//    private AcceptFriendRepository acceptFriendRepository;
 
     public Object login(LoginRequest loginRequest) {
         UserProfile userProfile = userProfileRepository.findByUsername(loginRequest.getUsername());
@@ -110,4 +115,13 @@ public class UserManager {
         return friendToAdds;
     }
 
+//    public Object declined(AddFriendResponse addFriendResponse){
+//        declineFriend.declined(addFriendResponse.getSender_id());
+//        return BaseResponse.createResponse(0,"decline and removed");
+//    }
+
+//    public Object accepted(AddFriendResponse addFriendResponse){
+//        acceptFriendRepository.accepted(addFriendResponse.getIs_accepted(),addFriendResponse.getReceiver_id(),addFriendResponse.getSender_id());
+//        return BaseResponse.createResponse(0,"accepted");
+//    }
 }

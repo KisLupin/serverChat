@@ -1,7 +1,11 @@
 package com.appchat.model.response;
 
-public class AddFriendResponse {
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+public class AddFriendResponse {
+    @Id
     private int sender_id;
     private int receiver_id;
     private int is_accepted;
