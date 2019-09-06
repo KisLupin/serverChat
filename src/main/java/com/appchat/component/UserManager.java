@@ -4,12 +4,9 @@ import com.appchat.model.data.*;
 import com.appchat.model.request.AddFriendRequest;
 import com.appchat.model.request.LastMess;
 import com.appchat.model.request.RegisterRequest;
-import com.appchat.model.response.AddFriendResponse;
-import com.appchat.model.response.BaseResponse;
-import com.appchat.model.response.MessageChatResponse;
+import com.appchat.model.response.*;
 import com.appchat.repository.*;
 import com.appchat.model.request.LoginRequest;
-import com.appchat.model.response.FriendResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +30,8 @@ public class UserManager {
     private FindNotFriendRepository findNotFriendRepository;
     @Autowired
     private MessFindLastMess messFindLastMess;
+    @Autowired
+    private StoryChatRepository storyChatRepository;
     @Autowired
     private FriendChatedRepository friendChatedRepository;
     @Autowired
@@ -100,7 +99,14 @@ public class UserManager {
         }
         return messageChatResponses;
     }
-
+    public Object getAllFriendStoryChat(int userId) {
+        List<StoryChatResponse> storyChatResponses = storyChatRepository.findAllFriendStory(userId);
+        if(storyChatResponses == null){
+            return BaseResponse.createResponse(0,"id invalid");
+        }else {
+            return BaseResponse.createResponse(storyChatResponses);
+        }
+    }
     public Object getSenderMess(int userId){
         List<FriendChated> friends = friendChatedRepository.findSendedMess(userId);
         return friends;
