@@ -7,66 +7,51 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table( name= "friend_response")
 public class FriendResponse {
     @Id
-    private int id;
-    @Column(name = "friend_id")
-    private int friendId;
-    @Column(name = "friend_nameofchat")
-    private String friendNameofchat;
-    @Column(name = "friend_username")
-    private String friendUsername;
-    @Column(name = "friend_avatar")
-    private String friendAvatar;
-    @Column(name = "created_time")
-    private Date createdTime;
+    private int friend_id;
+    private String friend_nameofchat;
+    private String friend_username;
+    private String friend_avatar;
+    private String phone;
 
-    public int getId() {
-        return id;
+    public int getFriend_id() {
+        return friend_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFriend_id(int friend_id) {
+        this.friend_id = friend_id;
     }
 
-    public int getFriendId() {
-        return friendId;
+    public String getFriend_nameofchat() {
+        return friend_nameofchat;
     }
 
-    public void setFriendId(int friendId) {
-        this.friendId = friendId;
+    public void setFriend_nameofchat(String friend_nameofchat) {
+        this.friend_nameofchat = friend_nameofchat;
     }
 
-    public String getFriendNameofchat() {
-        return friendNameofchat;
+    public String getFriend_username() {
+        return friend_username;
     }
 
-    public void setFriendNameofchat(String friendNameofchat) {
-        this.friendNameofchat = friendNameofchat;
+    public void setFriend_username(String friend_username) {
+        this.friend_username = friend_username;
     }
 
-    public String getFriendUsername() {
-        return friendUsername;
+    public String getFriend_avatar() {
+        return friend_avatar;
     }
 
-    public void setFriendUsername(String friendUsername) {
-        this.friendUsername = friendUsername;
+    public void setFriend_avatar(String friend_avatar) {
+        this.friend_avatar = friend_avatar;
     }
 
-    public String getFriendAvatar() {
-        return friendAvatar;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setFriendAvatar(String friendAvatar) {
-        this.friendAvatar = friendAvatar;
-    }
-
-    public Date getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

@@ -102,4 +102,13 @@ public class UserController {
     ){
         return userManager.accepted(addFriendResponse);
     }
+
+    @GetMapping(path = "/allImg")
+    public Object allImg(
+            @RequestParam("type") String type,
+            @RequestParam("senderId") int senderId,
+            @RequestParam("receiverId") int receiverId
+    ){
+        return userManager.getAllImageInMess(type,senderId,receiverId);
+    }
 }

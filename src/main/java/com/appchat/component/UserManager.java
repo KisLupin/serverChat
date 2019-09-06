@@ -43,7 +43,8 @@ public class UserManager {
     private DeclineFriend declineFriend;
     @Autowired
     private AcceptFriendRepository acceptFriendRepository;
-
+    @Autowired
+    private MessAllImage messAllImage;
     public Object login(LoginRequest loginRequest) {
         UserProfile userProfile = userProfileRepository.findByUsername(loginRequest.getUsername());
         if (userProfile == null || !userProfile.getPassword().equals(loginRequest.getPassword())) {
@@ -53,7 +54,7 @@ public class UserManager {
     }
 
     public Object getAllFriends(int userId) {
-        List<FriendResponse> friends = friendRepository.findAllFriend(userId);
+        List<FriendChated> friends = friendRepository.findAllFriend(userId);
         if (friends == null) {
             return BaseResponse.createResponse(0, "id invalid");
         }
@@ -124,4 +125,10 @@ public class UserManager {
         acceptFriendRepository.accepted(addFriendResponse.getSender_id(),addFriendResponse.getReceive_id());
         return BaseResponse.createResponse(0,"accepted");
     }
+
+    public Object getAllImageInMess(String type,int sender_id,int receiver_id){
+        List<Message> messages = messAllImage.allImage(type,sender_id,receiver_id);
+        return messages;
+    }
+
 }
