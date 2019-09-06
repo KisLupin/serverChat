@@ -116,4 +116,12 @@ public class UserController {
     ){
         return userManager.getAllImageInMess(type,senderId,receiverId);
     }
+
+    @PostMapping(path = "/removeFriend")
+    public Object removeFriend(
+            @RequestParam("sender_id") int sender_id,
+            @RequestParam("receiver_id") int receiver_id
+    ){
+        return userManager.unfriend(sender_id,receiver_id);
+    }
 }

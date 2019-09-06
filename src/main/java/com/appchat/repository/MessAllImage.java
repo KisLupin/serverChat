@@ -4,9 +4,10 @@ import com.appchat.model.data.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
+import org.springframework.stereotype.Repository;
 import java.util.List;
 
+@Repository
 public interface MessAllImage extends JpaRepository<Message,Integer> {
     @Query(nativeQuery = true ,
               value = "select * from message where type = :type and (sender_id = :senderId and receiver_id = :receiverId) " +

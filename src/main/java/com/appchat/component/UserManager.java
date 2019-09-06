@@ -44,6 +44,11 @@ public class UserManager {
     private AcceptFriendRepository acceptFriendRepository;
     @Autowired
     private MessAllImage messAllImage;
+    @Autowired
+    private Unfriend unfriend;
+    @Autowired
+    private DeletMessWhenUnfriend deletMessWhenUnfriend;
+
     public Object login(LoginRequest loginRequest) {
         UserProfile userProfile = userProfileRepository.findByUsername(loginRequest.getUsername());
         if (userProfile == null || !userProfile.getPassword().equals(loginRequest.getPassword())) {
@@ -137,4 +142,9 @@ public class UserManager {
         return messages;
     }
 
+    public Object unfriend(int sender_id,int receive_id){
+        unfriend.removeFriend(sender_id,receive_id);
+        deletMessWhenUnfriend.unfriend(sender_id,receive_id);
+        return BaseResponse.createResponse(0,"remove friend is successful");
+    }
 }
