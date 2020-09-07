@@ -13,13 +13,11 @@ import javax.transaction.Transactional;
 
 @Configuration
 @Repository
-@EnableJpaRepositories
 public interface DeletMessWhenUnfriend extends JpaRepository<Message,Integer> {
-    @Modifying(clearAutomatically = true)
+    @Modifying()
     @Query(nativeQuery = true, value = "delete from message " +
             "where (sender_id = :senderId and receiver_id = :receiverId) " +
             "or (sender_id =:receiverId and receiver_id = :senderId)")
-    @Transactional
     void unfriend(
             @Param("senderId") int senderId,
             @Param("receiverId") int receiverId

@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 @Repository
 @EnableJpaRepositories
 public interface AddFriendRepository extends JpaRepository<AddFriendRequest,Integer> {
-    @Modifying(clearAutomatically = true)
+    @Modifying()
     @Query(nativeQuery = true,
             value = "insert into friend(sender_id,receive_id,send_addfriend) " +
                     "values (:sender_id,:receiver_id,:is_send)"

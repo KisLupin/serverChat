@@ -1,7 +1,6 @@
 package com.appchat.firebase;
 
-import com.appchat.firebase.FilebaseManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,22 +11,17 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@AllArgsConstructor
 public class FireBaseController {
-    @Autowired
-    private FilebaseManager filebaseManager;
+    private final FirebaseManager firebaseManager;
     @PostMapping(value = "/postImage")
-    public Object postImage(
-            @RequestParam(value = "image") MultipartFile file
-    ) throws IOException {
-        String path= filebaseManager.uploadFile(file);
-        return path;
+    public Object postImage(@RequestParam(value = "image") MultipartFile file) throws IOException {
+        return firebaseManager.uploadFile(file);
     }
 
     @GetMapping(value = "/getImage", produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getImage(
-            @RequestParam(value = "fileName") String fileName
-    ){
-        return filebaseManager.getImage(fileName);
+    public byte[] getImage(@RequestParam(value = "fileName") String fileName){
+        return firebaseManager.getImage(fileName);
     }
 
 //    @GetMapping(value = "/getImageMyComputer", produces = MediaType.IMAGE_JPEG_VALUE)

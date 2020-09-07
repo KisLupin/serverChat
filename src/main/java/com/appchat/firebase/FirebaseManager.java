@@ -14,8 +14,8 @@ import java.io.InputStream;
 import java.util.Date;
 
 @Component
-public class FilebaseManager {
-    public FilebaseManager() {
+public class FirebaseManager {
+    public FirebaseManager() {
         try {
             InputStream in = new ClassPathResource("primate.json").getInputStream();
             FirebaseOptions options = new FirebaseOptions.Builder()

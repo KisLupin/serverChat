@@ -1,55 +1,43 @@
-package com.appchat.component;
+package com.appchat.service;
 
 import com.appchat.model.data.*;
 import com.appchat.model.request.AddFriendRequest;
 import com.appchat.model.request.LastMess;
-import com.appchat.model.request.RegisterRequest;
-import com.appchat.model.response.*;
-import com.appchat.repository.*;
 import com.appchat.model.request.LoginRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import com.appchat.model.request.RegisterRequest;
+import com.appchat.model.response.AddFriendResponse;
+import com.appchat.model.response.BaseResponse;
+import com.appchat.model.response.MessageChatResponse;
+import com.appchat.model.response.StoryChatResponse;
+import com.appchat.repository.*;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class UserManager {
+@Service
+@AllArgsConstructor
+public class UserServiceImpl implements UserService{
+    private final UserProfileRepository userProfileRepository;
+    private final FriendRepository friendRepository;
+    private final MessageChatResponseRepository messageChatResponseRepository;
+    private final RegisterRepository registerRepository;
+    private final UpdateAvatarRepository updateAvatarRepository;
+    private final FindNotFriendRepository findNotFriendRepository;
+    private final MessFindLastMess messFindLastMess;
+    private final StoryChatRepository storyChatRepository;
+    private final FriendChatedRepository friendChatedRepository;
+    private final AddFriendRepository addFriendRepository;
+    private final FriendWaitAcceptRepository friendWaitAcceptRepository;
+    private final DeclineFriend declineFriend;
+    private final AcceptFriendRepository acceptFriendRepository;
+    private final MessAllImage messAllImage;
+    private final Unfriend unfriend;
+    private final DeletMessWhenUnfriend deletMessWhenUnfriend;
 
-    @Autowired
-    private UserProfileRepository userProfileRepository;
-    @Autowired
-    private FriendRepository friendRepository;
-    @Autowired
-    private MessageChatResponseRepository messageChatResponseRepository;
-    @Autowired
-    private RegisterRepository registerRepository;
-    @Autowired
-    private UpdateAvatarRepository updateAvatarRepository;
-    @Autowired
-    private FindNotFriendRepository findNotFriendRepository;
-    @Autowired
-    private MessFindLastMess messFindLastMess;
-    @Autowired
-    private StoryChatRepository storyChatRepository;
-    @Autowired
-    private FriendChatedRepository friendChatedRepository;
-    @Autowired
-    private AddFriendRepository addFriendRepository;
-    @Autowired
-    private FriendWaitAcceptRepository friendWaitAcceptRepository;
-    @Autowired
-    private DeclineFriend declineFriend;
-    @Autowired
-    private AcceptFriendRepository acceptFriendRepository;
-    @Autowired
-    private MessAllImage messAllImage;
-    @Autowired
-    private Unfriend unfriend;
-    @Autowired
-    private DeletMessWhenUnfriend deletMessWhenUnfriend;
-
-    public Object login(LoginRequest loginRequest) {
+    @Override
+    public BaseResponse login(LoginRequest loginRequest) {
         UserProfile userProfile = userProfileRepository.findByUsername(loginRequest.getUsername());
         if (userProfile == null || !userProfile.getPassword().equals(loginRequest.getPassword())) {
             return BaseResponse.createResponse(0, "username or password is invalid");
@@ -57,35 +45,39 @@ public class UserManager {
         return BaseResponse.createResponse(userProfile);
     }
 
-    public Object getAllFriends(int userId) {
-        List<FriendChated> friends = friendRepository.findAllFriend(userId);
+    @Override
+    public BaseResponse getAllFriends(int userId) {
+        List<FriendChat> friends = friendRepository.findAllFriend(userId);
         if (friends == null) {
             return BaseResponse.createResponse(0, "id invalid");
         }
         return BaseResponse.createResponse(friends);
     }
 
-    @Transactional
-    public Object register(RegisterRequest registerRequest){
+    @Override
+    public BaseResponse register(RegisterRequest registerRequest){
         UserProfile userProfile = userProfileRepository.findByUsername(registerRequest.getUsername());
-        if (userProfile != null)
+        if (userProfile != null) {
             return BaseResponse.createResponse(0, "username is existed");
-        registerRepository.insertNewUser(registerRequest.getUsername(),registerRequest.getPassword(),registerRequest.getNameofchat());
+        }
+        registerRepository.insertNewUser(registerRequest.getUsername(),registerRequest.getPassword(),registerRequest.getNameOfChat());
         registerRepository.save(registerRequest);
         return BaseResponse.createResponse(1,"register is successful");
     }
 
-    public Object getHistoryChat(int senderId, int receiverId) {
+    @Override
+    public BaseResponse getHistoryChat(int senderId, int receiverId) {
         return BaseResponse.createResponse(messageChatResponseRepository.getHistoryMessage(senderId, receiverId));
     }
 
-    public Object changeAvatar(UpdateAvatar updateAvatar) {
+    @Override
+    public UserProfile changeAvatar(UpdateAvatar updateAvatar) {
         updateAvatarRepository.updateAvatar(updateAvatar.getPath(),updateAvatar.getId());
         updateAvatarRepository.save(updateAvatar);
-        UserProfile userProfile = userProfileRepository.findById(updateAvatar.getId());
-        return userProfile;
+        return userProfileRepository.findById(updateAvatar.getId());
     }
 
+    @Override
     public Object findAllNotFriend(int userId){
         List<FriendToAdd> friendToAdds = findNotFriendRepository.findAllNotFriend(userId);
         if (friendToAdds == null){
@@ -94,16 +86,16 @@ public class UserManager {
         return friendToAdds;
     }
 
+    @Override
     public Object getAllLastMess(List<LastMess> lastMesses){
         List<MessageChatResponse> messageChatResponses = new ArrayList<>();
         for (LastMess i:lastMesses) {
             messageChatResponses.add(messFindLastMess.getLastMess(i.getSenderId(),i.getReceiverId()));
         }
-        if (messageChatResponses == null){
-            return 0;
-        }
         return messageChatResponses;
     }
+
+    @Override
     public Object getAllFriendStoryChat(int userId) {
         List<StoryChatResponse> storyChatResponses = storyChatRepository.findAllFriendStory(userId);
         if(storyChatResponses == null){
@@ -112,36 +104,41 @@ public class UserManager {
             return BaseResponse.createResponse(storyChatResponses);
         }
     }
+
+    @Override
     public Object getSenderMess(int userId){
-        List<FriendChated> friends = friendChatedRepository.findSendedMess(userId);
-        return friends;
+        return friendChatedRepository.findSendedMess(userId);
     }
 
+    @Override
     public Object sendRequestAddFriend(AddFriendRequest addFriendRequest){
         addFriendRepository.sendRequestAddFriend(addFriendRequest.getSender_id(),addFriendRequest.getReceiver_id(),addFriendRequest.getIs_send());
         return BaseResponse.createResponse(1,"send request friend is successful");
     }
 
+    @Override
     public Object getAllFriendWaitResponse(int userId){
-        List<FriendToAdd> friendToAdds = friendWaitAcceptRepository.allFriendWaitResponse(userId);
-        return friendToAdds;
+        return friendWaitAcceptRepository.allFriendWaitResponse(userId);
     }
 
-    public Object declined(AddFriendResponse addFriendResponse){
+    @Override
+    public void declined(AddFriendResponse addFriendResponse){
         declineFriend.declined(addFriendResponse.getSender_id(),addFriendResponse.getReceive_id());
-        return BaseResponse.createResponse(0,"decline and removed");
+        BaseResponse.createResponse(0, "decline and removed");
     }
 
+    @Override
     public Object accepted(AddFriendResponse addFriendResponse){
         acceptFriendRepository.accepted(addFriendResponse.getSender_id(),addFriendResponse.getReceive_id());
         return BaseResponse.createResponse(0,"accepted");
     }
 
+    @Override
     public Object getAllImageInMess(String type,int sender_id,int receiver_id){
-        List<Message> messages = messAllImage.allImage(type,sender_id,receiver_id);
-        return messages;
+        return messAllImage.allImage(type,sender_id,receiver_id);
     }
 
+    @Override
     public Object unfriend(int sender_id,int receive_id){
         unfriend.removeFriend(sender_id,receive_id);
         deletMessWhenUnfriend.unfriend(sender_id,receive_id);

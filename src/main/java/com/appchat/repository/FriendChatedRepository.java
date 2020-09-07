@@ -1,6 +1,6 @@
 package com.appchat.repository;
 
-import com.appchat.model.data.FriendChated;
+import com.appchat.model.data.FriendChat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FriendChatedRepository extends JpaRepository<FriendChated,Integer> {
+public interface FriendChatedRepository extends JpaRepository<FriendChat,Integer> {
     @Query(nativeQuery = true,
             value = "SELECT " +
                     "user_profile.id as friend_id, " +
@@ -25,7 +25,7 @@ public interface FriendChatedRepository extends JpaRepository<FriendChated,Integ
                     "select receiver_id from " +
                     "(SELECT distinct sender_id,receiver_id FROM message where sender_id = :userId or receiver_id = :userId) abc) xyz on " +
                     " xyz.sender_id = user_profile.id and sender_id != :userId")
-    List<FriendChated> findSendedMess(
+    List<FriendChat> findSendedMess(
             @Param(value = "userId") int userId
     );
 }
